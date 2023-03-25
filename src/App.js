@@ -3,41 +3,37 @@ import { useState } from "react";
 
 function App() {
 
-  const [budget, setBudget] = useState({
-    web: "0",
-    seo: "0",
-    googleAds: "0"
-  })
+  //order of the values on the budget's array is [web,seo,googleAds]
+  const [budget, setBudget] = useState([0, 0, 0]);
+  const [totalBudget, setTotalBudget] = useState(0)
+
 
   const handleCheckboxChange = (event) => {
-    (event.target.checked) ?
-      setBudget({
-        ...budget,
-        [event.target.name]: event.target.value
-      }) : setBudget({
-        ...budget,
-        [event.target.name]: 0
-      })
+    const num = event.target.id;
+    budget[num] = (event.target.checked) ? event.target.value : 0;
+    setBudget([...budget]);
+    setTotalBudget(budget.reduce((total, item) => total + Number(item), 0));
   }
+
 
   return (
     <div>
       <p>¿Qué quieres hacer?</p>
       <div>
         <input type="checkbox"
-          id="web"
+          id={0}
           name="web"
           onChange={handleCheckboxChange}
-          value="500"
+          value={500}
         />
         <label htmlFor="web">Una página web (500€)</label>
       </div>
       <div>
         <input type="checkbox"
-          id="seo"
+          id={1}
           name="seo"
           onChange={handleCheckboxChange}
-          value="300"
+          value={300}
         />
         <label htmlFor="seo">Una consultoria SEO (300€)</label>
       </div>
@@ -45,16 +41,16 @@ function App() {
 
       <div>
         <input type="checkbox"
-          id="googleAds"
+          id={2}
           name="googleAds"
           onChange={handleCheckboxChange}
-          value="200"
+          value={200}
         />
         <label htmlFor="googleAds">Una campaña de Google Ads (200€)</label>
 
       </div>
       <div>
-        Precio: {Number(budget.web) + Number(budget.seo) + Number(budget.googleAds)}
+        Precio: {totalBudget}
       </div>
     </div>
   );
