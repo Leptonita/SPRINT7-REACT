@@ -67,8 +67,8 @@ function App() {
           value={200}
         />
         <label htmlFor="googleAds">Una campaña de Google Ads (200€)</label>
-
       </div>
+      <br />
       <div>
         Precio: {totalBudget}
       </div>

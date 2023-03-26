@@ -39,7 +39,7 @@ const WebPages = ({ amountPagesLang }) => {
         <DivWebPages>
 
             <DivInputBtn>
-                <label htmlFor="pages2">Número de páginas extra </label>
+                <label htmlFor="pages2">Número de páginas </label>
                 <InputBtn id="pages2" name="numPag" placeholder="0" value={numPages} handleChange={handleNumPages} />
             </DivInputBtn>
             <br />

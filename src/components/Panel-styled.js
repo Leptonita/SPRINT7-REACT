@@ -1,17 +1,25 @@
 import styled from "styled-components";
+import { keyframes } from 'styled-components'
+
+// Create the keyframes
+const zoomAnim = keyframes`
+  from   {opacity:0; width: 260px;}
+  to {opacity:1; width: 270px;}
+`;
+
 
 export const DivWebPages = styled.div`
 width: 270px;
 border: 2px solid black;
 margin: 15px 20px;
-padding: 30px;
+padding: 20px 30px;
 border-radius: 30px;
+animation: ${zoomAnim} 0.5s linear;
 `;
 
 export const DivInputBtn = styled.div`
 display: flex;
 align-items: center;
-justify-content: space-around;
 `;
 
 export const Btn = styled.button`
