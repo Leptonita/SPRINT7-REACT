@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { DivWebPages, DivInputBtn } from './Panel-styled';
 import InputBtn from './InputBtn';
+import useLocalStorage from '../useLocalStorage';
 
 const WebPages = ({ amountPagesLang }) => {
-    const [numPages, setNumPages] = useState(0);
-    const [numLanguages, setNumLanguages] = useState(1);
+    const [numPages, setNumPages] = useLocalStorage('numPages', 0);
+    const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1);
 
     useEffect(() => {
         amountPagesLang(numPages, numLanguages);
