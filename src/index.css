@@ -1,6 +1,10 @@
-body {
-  margin: 10px;
+* {
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  margin: 20px;
   font-family: 'Trebuchet MS', Arial, sans-serif;
 }

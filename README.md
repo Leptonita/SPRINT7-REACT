@@ -1,8 +1,14 @@
 SPRINT 7 REACT - BUDGET
 
-EX1 - array for the state of 3 checkboxes and a state for the total budget  
+EX1 - array for the state of 3 checkboxes and a state for the total budget 
+ 
 EX2 - budget incluiding a panel for web to estimate extra pages and languages
+
 EX3 - on web panel, replacing interactivity with a component that contains buttons and an input to add quantities
+
+EX4 - saving in localstorage
+
+EX5 - navigation with React Router - Welcome and Budget components
 
 # Getting Started with Create React App
 
