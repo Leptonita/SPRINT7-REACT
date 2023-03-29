@@ -1,25 +1,27 @@
 import styled from "styled-components";
 import { keyframes } from 'styled-components';
 
+//budget
 export const TitleB = styled.div`
 font-size: 1.2rem;
 margin: 30px 0 15px 0;
 font-weight: bolder;
 `;
 
-// Create the keyframes
+// web
 const zoomAnim = keyframes`
-  from   {opacity:0; width: 260px;}
-  to {opacity:1; width: 270px;}
+  from   {opacity:0; width: 310px;}
+  to {opacity:1; width: 330px;}
 `;
 
 export const DivWebPages = styled.div`
-width: 270px;
+width: 330px;
 border: 2px solid black;
 margin: 15px 20px;
-padding: 20px 30px;
+padding: 20px 25px;
 border-radius: 30px;
 animation: ${zoomAnim} 0.5s linear;
+position: relative;
 `;
 
 export const SpanPrecio = styled.span`
@@ -59,6 +61,53 @@ border: 0px solid white;
 text-align: center;
 `;
 
+export const BtnInfo = styled.button`
+width: 20px;
+height: 20px;
+font-weight: bold;
+font-size: 16px;
+color: white;
+background-color: #919191;
+margin: 0 7px;
+padding: 0px;
+display: inline-block;
+line-height: 20px;
+border: 0px solid transparent;
+border-radius: 30px;
+text-align: center;
+cursor: pointer;
+&:hover{
+	  background-color: #b6d1d3;
+    color: blueviolet
+  }
+`;
+
+//infoweb
+
+export const DivInfo = styled.div`
+position: fixed;
+z-index: 10;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(114, 114, 114, 0.5);
+display: ${(props) => props.isVisible ? 'flex' : 'none'};
+align-items: center;
+`;
+
+export const DivInfoTxt = styled.div`
+width: 400px;
+height: 50px;
+background-color: #e4e4eb;
+border: 2px solid black;
+border-radius: 10px;
+padding: 10px 30px;
+margin-bottom: 140px;
+margin-left: 10px;
+`;
+
+//navigation
 export const UlMenu = styled.ul`
 text-decoration: none;
 list-style: none;
@@ -89,6 +138,7 @@ const wAnim = keyframes`
   to {opacity:1;}
 `;
 
+//welcome
 export const DivWelcome = styled.div`
 width: 490px;
 border: 2px solid #ff0073;

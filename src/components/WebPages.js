@@ -11,25 +11,10 @@ const WebPages = ({ amountPagesLang }) => {
         amountPagesLang(numPages, numLanguages);
     }, [numPages, numLanguages])
 
-    /* const handleNumPages = (event) => {
-        if (event.target.value >= 0) {
-            setNumPages(parseInt(event.target.value));
-        } else {
-            alert("sólo número enteros positivos")
-        }
-    } */
 
     const handleNumPages = (num) => {
         setNumPages(parseInt(num));
     }
-
-    /* const handleNumLanguages = (event) => {
-        if (event.target.value > 0) {
-            setNumLanguages(parseInt(event.target.value));
-        } else {
-            alert("la web debe tener un idioma como mínimo")
-        }
-    } */
 
     const handleNumLanguages = (num) => {
 
@@ -40,14 +25,16 @@ const WebPages = ({ amountPagesLang }) => {
         <DivWebPages>
 
             <DivInputBtn>
-                <label htmlFor="pages2">Número de páginas </label>
-                <InputBtn id="pages2" name="numPag" placeholder="0" value={numPages} handleChange={handleNumPages} />
+                <label htmlFor="pages">Número de páginas </label>
+                <InputBtn id="pages" name="numPag" placeholder="0" value={numPages} handleChange={handleNumPages} />
+
             </DivInputBtn>
             <br />
             <DivInputBtn>
                 <label htmlFor="languages">Número de idiomas </label>
                 <InputBtn id="languages" type="number" name="numPag" placeholder="1" value={numLanguages}
                     handleChange={handleNumLanguages} />
+
             </DivInputBtn>
 
         </DivWebPages >

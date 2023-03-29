@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Btn, InputTxt, DivInputBtn } from './Panel-styled';
+import { Btn, InputTxt, BtnInfo } from './Panel-styled';
+import Infoweb from './Infoweb';
 
 const InputBtn = ({ id, name, placeholder, value, handleChange }) => {
 
-    const [valueNum, setValueNum] = useState(value)
+    const [valueNum, setValueNum] = useState(value);
+    const [infoIsClicked, setInfoIsClicked] = useState(false);
 
     useEffect(() => {
         handleChange(valueNum);
@@ -25,12 +27,23 @@ const InputBtn = ({ id, name, placeholder, value, handleChange }) => {
     const decreaseNum = () => {
         return valueNum >= 1 ? setValueNum(valueNum - 1) : 0;
     }
+
+    const showInfoweb = () => {
+        setInfoIsClicked((c) => !c);
+    }
+
+
     return (
         <>
             <Btn onClick={increaseNum}>+</Btn>
             <InputTxt id={id} type="text" name={name} placeholder={placeholder} value={valueNum}
                 onChange={handleInputNumChange} />
             <Btn onClick={decreaseNum}>-</Btn>
+            <BtnInfo onClick={showInfoweb}> i </BtnInfo>
+
+            <div>
+                {infoIsClicked && <Infoweb servei={id} valueNum={valueNum} infoShow={showInfoweb} />}
+            </div>
 
         </>
     )
