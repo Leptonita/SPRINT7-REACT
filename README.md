@@ -12,6 +12,8 @@ EX5 - navigation with React Router - Welcome and Budget components
 
 EX6 - info popup at web page budget section
 
+EX7 - budget identification, customer, date and budgets list if any budget exists
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

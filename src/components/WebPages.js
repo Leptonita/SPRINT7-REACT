@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { DivWebPages, DivInputBtn } from './Panel-styled';
-import InputBtn from './InputBtn';
+import WebInputBtn from './WebInputBtn';
 import useLocalStorage from '../utils/useLocalStorage';
 
-const WebPages = ({ amountPagesLang }) => {
-    const [numPages, setNumPages] = useLocalStorage('numPages', 0);
-    const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1);
+const WebPages = ({ amountPagesLang, numPages, setNumPages, numLanguages, setNumLanguages }) => {
+    /* const [numPages, setNumPages] = useLocalStorage('numPages', 0);
+    const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1); */
 
     useEffect(() => {
         amountPagesLang(numPages, numLanguages);
@@ -26,13 +26,13 @@ const WebPages = ({ amountPagesLang }) => {
 
             <DivInputBtn>
                 <label htmlFor="pages">Número de páginas </label>
-                <InputBtn id="pages" name="numPag" placeholder="0" value={numPages} handleChange={handleNumPages} />
+                <WebInputBtn id="pages" name="numPag" placeholder="0" value={numPages} handleChange={handleNumPages} />
 
             </DivInputBtn>
             <br />
             <DivInputBtn>
                 <label htmlFor="languages">Número de idiomas </label>
-                <InputBtn id="languages" type="number" name="numPag" placeholder="1" value={numLanguages}
+                <WebInputBtn id="languages" type="number" name="numPag" placeholder="1" value={numLanguages}
                     handleChange={handleNumLanguages} />
 
             </DivInputBtn>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Btn, InputTxt, BtnInfo } from './Panel-styled';
-import Infoweb from './Infoweb';
+import WebInfo from './WebInfo';
 
-const InputBtn = ({ id, name, placeholder, value, handleChange }) => {
+const WebInputBtn = ({ id, name, placeholder, value, handleChange }) => {
 
     const [valueNum, setValueNum] = useState(value);
     const [infoIsClicked, setInfoIsClicked] = useState(false);
@@ -42,10 +42,10 @@ const InputBtn = ({ id, name, placeholder, value, handleChange }) => {
             <BtnInfo onClick={showInfoweb}> i </BtnInfo>
 
             <div>
-                {infoIsClicked && <Infoweb servei={id} valueNum={valueNum} infoShow={showInfoweb} />}
+                {infoIsClicked && <WebInfo servei={id} valueNum={valueNum} infoShow={showInfoweb} />}
             </div>
 
         </>
     )
 }
-export default InputBtn;
+export default WebInputBtn;

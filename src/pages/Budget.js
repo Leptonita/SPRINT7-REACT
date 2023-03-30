@@ -2,7 +2,7 @@ import WebPages from "../components/WebPages";
 import { useEffect, useState } from "react";
 import useLocalStorage from "../utils/useLocalStorage";
 import NavBar from "../components/NavBar";
-import { TitleB, SpanPrecio } from '../components/Panel-styled';
+import { DivBudgetContainer, DivIndentify, DivForm, TitleB, SpanPrecio, BudgetsList } from '../components/Panel-styled';
 
 function Budget() {
 
@@ -10,27 +10,20 @@ function Budget() {
     const [budget, setBudget] = useLocalStorage('budgetArr', [0, 0, 0]);
     const [totalBudget, setTotalBudget] = useLocalStorage('totalBudget', 0)
     const [webIsChecked, setWebIsChecked] = useLocalStorage('webIsChecked', false);
-    /*  useState(() => {
-       const itemWeb = localStorage.getItem('webIsChecked');
-       return itemWeb ? JSON.parse(itemWeb) : false;
-     });*/
-
     const [seoIsChecked, setSeoIsChecked] = useLocalStorage('seoIsChecked', false);
-
-    /*   useState(() => {
-        const itemSeo = localStorage.getItem('seoIsChecked');
-        return itemSeo ? JSON.parse(itemSeo) : false;
-      }); */
-
     const [adsIsChecked, setAdsIsChecked] = useLocalStorage('adsIsChecked', false);
+    const [numPages, setNumPages] = useLocalStorage('numPages', 0);
+    const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1);
+    const [customer, setCustomer] = useLocalStorage('customerName', '');
+    const [budgetName, setBudgetName] = useLocalStorage('budgetName', '');
+    const [printedBudgetsList, setPrintedBudgetsList] = useState([]);
+    const d = new Date();
 
-    /*   useState(() => {
-        const itemAds = localStorage.getItem('adsIsChecked');
-        return itemAds ? JSON.parse(itemAds) : false;
-      }); */
-
+    const [budgetsListArr, setBudgetsListArr] = useState([]);
 
     const basicWebBudget = 500;
+    //let printedBudgetsList = [];
+
 
     useEffect(() => {
         localStorage.setItem("webIsChecked", JSON.stringify(webIsChecked));
@@ -38,6 +31,26 @@ function Budget() {
         localStorage.setItem('adsIsChecked', JSON.stringify(adsIsChecked))
     }, [webIsChecked, seoIsChecked, adsIsChecked])
 
+    /*    
+    useEffect(() => {
+        const budgetObj = {
+            'customer': customer,
+            'budgetName': budgetName,
+            'totalBudget': totalBudget,
+            'webIsChecked': webIsChecked,
+            'seoIsChecked': seoIsChecked,
+            'adsIsChecked': adsIsChecked,
+            'numPages': numPages,
+            'numLanguages': numLanguages,
+            'dateBudget': d.toLocaleString('en-GB')
+        }
+        setTheBudgetObj(budgetObj);
+        setBudgetsListArr([...budgetsListArr]);
+        console.log("theBudgetObj-effect", theBudgetObj);
+        console.log('budgetsListArr-effect', budgetsListArr);
+
+    }, []);
+ */
     const calculateTotalBudget = () => {
         setBudget([...budget]);
         setTotalBudget(budget.reduce((total, item) => Number(total) + Number(item)));
@@ -68,53 +81,144 @@ function Budget() {
         calculateTotalBudget();
     }
 
+
+
+    function addBudgetObject() {
+        const budgetObj = {
+            'customer': customer,
+            'budgetName': budgetName,
+            'totalBudget': totalBudget,
+            'web': webIsChecked,
+            'seo': seoIsChecked,
+            'ads': adsIsChecked,
+            'pages': numPages,
+            'languages': numLanguages,
+            'dateBudget': d.toLocaleString('en-GB')
+        }
+        console.log("budgetObj-add", budgetObj);
+
+        const currentBudgetListArr = [...budgetsListArr, budgetObj]
+        console.log("currentBudgetListArr", currentBudgetListArr);
+
+        setBudgetsListArr([...budgetsListArr, budgetObj]);
+        console.log('budgetsListArr-add', budgetsListArr);
+
+        const printingB = currentBudgetListArr.map((item, index) => {
+            console.log('item.customer', item.customer + index)
+            return (
+                <tr key={item.budgetName}>
+                    <td> {index} </td>
+                    <td> {item.dateBudget} </td>
+                    <td> {item.customer} </td>
+                    <td> {item.budgetName}</td>
+                    <td> {item.totalBudget}€</td>
+                    <td> {item.web ? `Web con ${item.pages} pág. y ${item.languages} ${item.languages < 2 ? 'idioma' : 'idiomas'}` : "no-web"} </td>
+
+                    <td> {item.seo ? "SEO" : "no-seo"} </td>
+                    <td> {item.ads ? "Google Ads" : "no-publi"} </td>
+                </tr>
+            )
+
+
+        });
+        console.log('printingB', printingB);
+
+        setPrintedBudgetsList(printingB);
+        console.log('printedBudgetsList', printedBudgetsList);
+    }
+
+    /* <BudgetsList key={budget.budgetName}>{budget.customer} </BudgetsList> */
+
+
+
     return (
-        <div>
+        <>
             <NavBar />
-            <TitleB>¿Qué quieres hacer?</TitleB>
-            <div>
-                <input type="checkbox"
-                    id={0}
-                    name="web"
-                    onChange={handleCheckboxChange}
-                    value={500}
-                    checked={webIsChecked}
-                />
-                <label htmlFor="web"> Una página web (500€)</label>
-            </div>
+            <DivBudgetContainer>
 
-            {(webIsChecked) && <WebPages amountPagesLang={quantifyWebPages} />}
-
-            <div>
-                <input type="checkbox"
-                    id={1}
-                    name="seo"
-                    onChange={handleCheckboxChange}
-                    value={300}
-                    checked={seoIsChecked}
-                />
-                <label htmlFor="seo"> Una consultoria SEO (300€)</label>
-            </div>
+                <DivForm>
+                    <DivIndentify>
+                        <label htmlFor="customer"> Nombre del cliente: </label>
+                        <input type="text" id="customer" name="customer" placeholder="cliente" value={customer} onChange={(e) => setCustomer(e.target.value)} />
+                    </DivIndentify>
+                    <DivIndentify>
+                        <label htmlFor="budgetName">Nombre del presupuesto: </label>
+                        <input type="text" id="budgetName" name="budgetName" placeholder="presupuesto" value={budgetName} onChange={(e) => setBudgetName(e.target.value)} />
+                    </DivIndentify>
 
 
-            <div>
-                <input type="checkbox"
-                    id={2}
-                    name="googleAds"
-                    onChange={handleCheckboxChange}
-                    value={200}
-                    checked={adsIsChecked}
-                />
-                <label htmlFor="googleAds"> Una campaña de Google Ads (200€)</label>
-            </div>
-            <br />
-            <div>
-                Precio: <SpanPrecio>{totalBudget}€</SpanPrecio>
-            </div>
+                    <TitleB>¿Qué quieres hacer?</TitleB>
+                    <div>
+                        <input type="checkbox"
+                            id={0}
+                            name="web"
+                            onChange={handleCheckboxChange}
+                            value={500}
+                            checked={webIsChecked}
+                        />
+                        <label htmlFor="web"> Una página web (500€)</label>
+                    </div>
+
+                    {(webIsChecked) && <WebPages amountPagesLang={quantifyWebPages} numPages={numPages} numLanguages={numLanguages} setNumPages={setNumPages} setNumLanguages={setNumLanguages}
+                    />}
+
+                    <div>
+                        <input type="checkbox"
+                            id={1}
+                            name="seo"
+                            onChange={handleCheckboxChange}
+                            value={300}
+                            checked={seoIsChecked}
+                        />
+                        <label htmlFor="seo"> Una consultoria SEO (300€)</label>
+                    </div>
 
 
+                    <div>
+                        <input type="checkbox"
+                            id={2}
+                            name="googleAds"
+                            onChange={handleCheckboxChange}
+                            value={200}
+                            checked={adsIsChecked}
+                        />
+                        <label htmlFor="googleAds"> Una campaña de Google Ads (200€)</label>
+                    </div>
 
-        </div>
+                    <br />
+                    <div>
+                        Precio: <SpanPrecio>{totalBudget}€</SpanPrecio>
+                    </div>
+
+                    <button onClick={() => addBudgetObject()}>Añadir presupuesto al listado</button>
+                </DivForm>
+
+                {(printedBudgetsList.length > 0) && <BudgetsList>
+                    <h1>Listado de presupuestos</h1>
+
+                    <table><thead>
+                        <tr>
+                            <td> id </td>
+                            <td> fecha </td>
+                            <td> cliente</td>
+                            <td> nombre presu.</td>
+                            <td> precio</td>
+                            <td> opción web</td>
+
+                            <td> opción SEO</td>
+                            <td> opción publi</td>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            {printedBudgetsList}
+                        </tbody>
+                    </table>
+
+                </BudgetsList>}
+
+
+            </DivBudgetContainer>
+        </>
     );
 }
 

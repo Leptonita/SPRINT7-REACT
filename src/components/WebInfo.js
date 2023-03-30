@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { DivInfo, DivInfoTxt } from './Panel-styled';
 
-const Info = (props) => {
+const WebInfo = (props) => {
     const [isVisible, setIsVisible] = useState(true);
 
     /* */
@@ -23,4 +23,4 @@ const Info = (props) => {
         </DivInfo>
     )
 }
-export default Info;
+export default WebInfo;

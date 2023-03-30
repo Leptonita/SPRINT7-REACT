@@ -2,10 +2,38 @@ import styled from "styled-components";
 import { keyframes } from 'styled-components';
 
 //budget
+export const DivBudgetContainer = styled.div`
+width: 100vw;
+display: flex;
+flex-wrap: wrap;
+flex: 1 1;
+`;
+
+export const DivIndentify = styled.div`
+margin: 20px 0;
+`;
+
+export const DivForm = styled.div`
+
+border: 2px dotted #bbb;
+margin: 15px 20px;
+padding: 20px 25px;
+border-radius: 30px;
+`;
+
 export const TitleB = styled.div`
 font-size: 1.2rem;
 margin: 30px 0 15px 0;
 font-weight: bolder;
+`;
+
+export const BudgetsList = styled.div`
+min-width: 570px;
+font-size: 0.7rem;
+border: 2px dotted #bbb;
+margin: 15px 20px;
+padding: 20px 25px;
+border-radius: 30px;
 `;
 
 // web
@@ -82,8 +110,7 @@ cursor: pointer;
   }
 `;
 
-//infoweb
-
+//Web info modal
 export const DivInfo = styled.div`
 position: fixed;
 z-index: 10;
@@ -91,7 +118,7 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-background: rgba(114, 114, 114, 0.5);
+background: rgba(114, 114, 114, 0.7);
 display: ${(props) => props.isVisible ? 'flex' : 'none'};
 align-items: center;
 `;
@@ -103,7 +130,7 @@ background-color: #e4e4eb;
 border: 2px solid black;
 border-radius: 10px;
 padding: 10px 30px;
-margin-bottom: 140px;
+margin-top: 120px;
 margin-left: 10px;
 `;
 
@@ -114,6 +141,7 @@ list-style: none;
 display: flex;
 align-items: center;
 gap: 50px;
+margin-bottom: 40px;
 `;
 
 export const LiLogo = styled.li`

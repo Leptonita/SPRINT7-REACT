@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Welcome from '../pages/Welcome';
 import Budget from '../pages/Budget';
-import InfoWeb from '../components/Infoweb'
+import InfoWeb from '../components/WebInfo'
 import ErrorPage from '../pages/ErrorPage';
 import NavBar from '../components/NavBar';
 
