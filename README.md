@@ -12,7 +12,7 @@ EX5 - navigation with React Router - Welcome and Budget components
 
 EX6 - info popup at web page budget section
 
-EX7 - budget identification, customer, date and budgets list if any budget exists
+EX7 - budget identification, customer, date and printing the list of budgets if any budget exists
 
 # Getting Started with Create React App
 
