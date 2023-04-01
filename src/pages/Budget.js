@@ -17,6 +17,7 @@ function Budget() {
     const [customer, setCustomer] = useLocalStorage('customerName', '');
     const [budgetName, setBudgetName] = useLocalStorage('budgetName', '');
     const [printedBudgetsList, setPrintedBudgetsList] = useState([]);
+    const [search, setSearch] = useState('');
     const d = new Date();
 
     const [budgetsListArr, setBudgetsListArr] = useState([]);
@@ -96,12 +97,16 @@ function Budget() {
         }
         console.log("budgetObj-add", budgetObj);
 
-        if (budgetsListArr.length !== 0 && budgetsListArr.some(item => (item.budgetName.toLowerCase() === budgetObj.budgetName.toLowerCase()))) {
+        //presupuestos con nombres 'únicos'
+        /*  if (budgetsListArr.length !== 0 && budgetsListArr.some(item => (item.budgetName.toLowerCase() === budgetObj.budgetName.toLowerCase()))) {
             currentBudgetListArr = [...budgetsListArr];
             alert("ya existe un presupuesto con este nombre");
         } else {
             currentBudgetListArr = [...budgetsListArr, budgetObj];
         }
+*/
+        // prespuestos con nombres que se pueden repetir
+        currentBudgetListArr = [...budgetsListArr, budgetObj];
         //console.log("currentBudgetListArr", currentBudgetListArr);
 
         setBudgetsListArr(currentBudgetListArr);
@@ -139,6 +144,20 @@ function Budget() {
         console.log("arr", arr);
         const printingDataSorted = printArray(arrCopySorted);
         setPrintedBudgetsList(printingDataSorted);
+    }
+
+    const handleInputBudgetList = (e) => {
+        setSearch(e.target.value);
+        const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName === e.target.value);
+        const printingDataFiltered = printArray(filteredBudgetListArr);
+        setPrintedBudgetsList(printingDataFiltered);
+    }
+
+    const handleSearch = (presu) => {
+
+        const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName === presu);
+        const printingDataFiltered = printArray(filteredBudgetListArr);
+        setPrintedBudgetsList(printingDataFiltered);
     }
 
     return (
@@ -203,16 +222,22 @@ function Budget() {
                     <ButtonBudgetList onClick={() => addBudgetObject()}>Añadir presupuesto al listado</ButtonBudgetList>
                 </DivForm>
 
-                {(printedBudgetsList.length > 0) && <BudgetsList>
+                <BudgetsList>
                     <h1>Listado de presupuestos</h1>
-                    orden por:
-                    <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'dateBudget')}>fecha</ButtonBudgetList>
-                    {/* <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'customer')}>cliente</ButtonBudgetList> */}
-                    <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'budgetName')}>alfabético nombre presupuesto</ButtonBudgetList>
-                    {/*  <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'totalBudget')}>precio</ButtonBudgetList>
+                    <div>
+                        ordenados por:
+                        <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'dateBudget')}>fecha</ButtonBudgetList>
+                        {/* <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'customer')}>cliente</ButtonBudgetList> */}
+                        <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'budgetName')}>alfabético nombre presupuesto</ButtonBudgetList>
+                        {/*  <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'totalBudget')}>precio</ButtonBudgetList>
  */}
-                    <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'id')}>reiniciar orden</ButtonBudgetList>
-
+                        <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'id')}>reiniciar orden</ButtonBudgetList>
+                    </div>
+                    <div><label htmlFor="searcher">Buscar presupuestos: </label>
+                        <input type="search" id="searcher" name="search" placeholder="nombre presupuesto" onChange={handleInputBudgetList} value={search} />
+                        <button onClick={() => handleSearch(search)}>search</button>
+                    </div>
+                    <br />
                     <table><thead>
                         <tr>
                             <td> id </td>
@@ -223,7 +248,7 @@ function Budget() {
                             <td> opción web</td>
 
                             <td> opción SEO</td>
-                            <td> opción publi</td>
+                            <td> opción publicidad</td>
                         </tr>
                     </thead>
                         <tbody>
@@ -231,10 +256,10 @@ function Budget() {
                         </tbody>
                     </table>
 
-                </BudgetsList>}
+                </BudgetsList>
 
 
-            </DivBudgetContainer>
+            </DivBudgetContainer >
         </>
     );
 }

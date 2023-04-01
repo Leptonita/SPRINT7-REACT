@@ -143,8 +143,8 @@ background-color: #e4e4eb;
 border: 2px solid black;
 border-radius: 10px;
 padding: 10px 30px;
-margin-top: 120px;
-margin-left: 10px;
+margin-top: 145px;
+margin-left: 50px;
 `;
 
 //navigation
