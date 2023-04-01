@@ -2,7 +2,7 @@ import WebPages from "../components/WebPages";
 import { useEffect, useState } from "react";
 import useLocalStorage from "../utils/useLocalStorage";
 import NavBar from "../components/NavBar";
-import { DivBudgetContainer, DivIndentify, DivForm, TitleB, SpanPrecio, BudgetsList } from '../components/Panel-styled';
+import { DivBudgetContainer, DivIndentify, DivForm, TitleB, SpanPrecio, ButtonBudgetList, BudgetsList } from '../components/Panel-styled';
 
 function Budget() {
 
@@ -31,26 +31,7 @@ function Budget() {
         localStorage.setItem('adsIsChecked', JSON.stringify(adsIsChecked))
     }, [webIsChecked, seoIsChecked, adsIsChecked])
 
-    /*    
-    useEffect(() => {
-        const budgetObj = {
-            'customer': customer,
-            'budgetName': budgetName,
-            'totalBudget': totalBudget,
-            'webIsChecked': webIsChecked,
-            'seoIsChecked': seoIsChecked,
-            'adsIsChecked': adsIsChecked,
-            'numPages': numPages,
-            'numLanguages': numLanguages,
-            'dateBudget': d.toLocaleString('en-GB')
-        }
-        setTheBudgetObj(budgetObj);
-        setBudgetsListArr([...budgetsListArr]);
-        console.log("theBudgetObj-effect", theBudgetObj);
-        console.log('budgetsListArr-effect', budgetsListArr);
 
-    }, []);
- */
     const calculateTotalBudget = () => {
         setBudget([...budget]);
         setTotalBudget(budget.reduce((total, item) => Number(total) + Number(item)));
@@ -81,30 +62,8 @@ function Budget() {
         calculateTotalBudget();
     }
 
-
-
-    function addBudgetObject() {
-        const budgetObj = {
-            'customer': customer,
-            'budgetName': budgetName,
-            'totalBudget': totalBudget,
-            'web': webIsChecked,
-            'seo': seoIsChecked,
-            'ads': adsIsChecked,
-            'pages': numPages,
-            'languages': numLanguages,
-            'dateBudget': d.toLocaleString('en-GB')
-        }
-        console.log("budgetObj-add", budgetObj);
-
-        const currentBudgetListArr = [...budgetsListArr, budgetObj]
-        console.log("currentBudgetListArr", currentBudgetListArr);
-
-        setBudgetsListArr([...budgetsListArr, budgetObj]);
-        console.log('budgetsListArr-add', budgetsListArr);
-
-        const printingB = currentBudgetListArr.map((item, index) => {
-            console.log('item.customer', item.customer + index)
+    const printArray = (arr) => {
+        return arr.map((item, index) => {
             return (
                 <tr key={item.budgetName}>
                     <td> {index} </td>
@@ -118,18 +77,68 @@ function Budget() {
                     <td> {item.ads ? "Google Ads" : "no-publi"} </td>
                 </tr>
             )
-
-
         });
-        console.log('printingB', printingB);
-
-        setPrintedBudgetsList(printingB);
-        console.log('printedBudgetsList', printedBudgetsList);
     }
 
-    /* <BudgetsList key={budget.budgetName}>{budget.customer} </BudgetsList> */
+    function addBudgetObject() {
+        let currentBudgetListArr = [];
+        const budgetObj = {
+            'customer': customer,
+            'budgetName': budgetName,
+            'totalBudget': totalBudget,
+            'web': webIsChecked,
+            'seo': seoIsChecked,
+            'ads': adsIsChecked,
+            'pages': numPages,
+            'languages': numLanguages,
+            'dateBudget': d.toLocaleString('en-GB')
+        }
+        console.log("budgetObj-add", budgetObj);
 
+        if (budgetsListArr.length !== 0 && budgetsListArr.some(item => (item.budgetName === budgetObj.budgetName))) {
+            currentBudgetListArr = [...budgetsListArr];
+            alert("ya existe un presupuesto con este nombre");
+        } else {
+            currentBudgetListArr = [...budgetsListArr, budgetObj];
+        }
+        //console.log("currentBudgetListArr", currentBudgetListArr);
 
+        setBudgetsListArr(currentBudgetListArr);
+        //console.log('budgetsListArr-add', budgetsListArr);
+
+        const printingB = printArray(currentBudgetListArr);
+        //console.log('printingB', printingB);
+
+        setPrintedBudgetsList(printingB);
+        //console.log('printedBudgetsList', printedBudgetsList);
+    }
+
+    const sortStringArray = (arr, attrib) => {
+        const propertyName = attrib;
+        const arrCopy = JSON.parse(JSON.stringify(arr));
+
+        const arrCopySorted = arrCopy.sort((a, b) => {
+            if (a[propertyName] < b[propertyName]) {
+                return -1;
+            } else if (a[propertyName] > b[propertyName]) {
+                return 1;
+            }
+            return 0;
+        })
+        console.log("arr", arr);
+        const printingDataSorted = printArray(arrCopySorted);
+        setPrintedBudgetsList(printingDataSorted);
+    }
+
+    const sortObjNumArray = (arr, attrib) => {
+        const propertyName = attrib;
+        const arrCopy = JSON.parse(JSON.stringify(arr));
+
+        const arrCopySorted = arrCopy.sort((a, b) => Number(a[propertyName]) - Number(b[propertyName]));
+        console.log("arr", arr);
+        const printingDataSorted = printArray(arrCopySorted);
+        setPrintedBudgetsList(printingDataSorted);
+    }
 
     return (
         <>
@@ -190,11 +199,18 @@ function Budget() {
                         Precio: <SpanPrecio>{totalBudget}€</SpanPrecio>
                     </div>
 
-                    <button onClick={() => addBudgetObject()}>Añadir presupuesto al listado</button>
+                    <ButtonBudgetList onClick={() => addBudgetObject()}>Añadir presupuesto al listado</ButtonBudgetList>
                 </DivForm>
 
                 {(printedBudgetsList.length > 0) && <BudgetsList>
                     <h1>Listado de presupuestos</h1>
+                    orden por:
+                    <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'dateBudget')}>fecha</ButtonBudgetList>
+                    {/* <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'customer')}>cliente</ButtonBudgetList> */}
+                    <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'budgetName')}>alfabético nombre presupuesto</ButtonBudgetList>
+                    {/*  <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'totalBudget')}>precio</ButtonBudgetList>
+ */}
+                    <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'dateBudget')}>reiniciar orden</ButtonBudgetList>
 
                     <table><thead>
                         <tr>

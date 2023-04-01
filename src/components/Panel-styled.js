@@ -1,5 +1,15 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { keyframes } from 'styled-components';
+
+//button colors
+const ButtonColorCSS = css`
+color: white;
+background-color: #ff00ae;
+&:hover {
+	  background-color: #00f2ff;
+    color: blueviolet
+}
+`;
 
 //budget
 export const DivBudgetContainer = styled.div`
@@ -25,6 +35,12 @@ export const TitleB = styled.div`
 font-size: 1.2rem;
 margin: 30px 0 15px 0;
 font-weight: bolder;
+`;
+
+export const ButtonBudgetList = styled.button`
+${ButtonColorCSS};
+margin: 10px 3px;
+padding: 5px 11px;
 `;
 
 export const BudgetsList = styled.div`
@@ -62,13 +78,13 @@ display: flex;
 align-items: center;
 `;
 
-export const Btn = styled.button`
+export const BtnWebNum = styled.button`
+${ButtonColorCSS};
 width: 20px;
 height: 20px;
 font-weight: bolder;
 font-size: 19px;
-color: white;
-background-color: #ff00ae;
+
 margin: 0 auto;
 padding: 0;
 display: inline-block;
@@ -76,11 +92,8 @@ line-height: 20px;
 border: 0px solid transparent;
 border-radius: 5px;
 text-align: center;
-cursor: pointer;
-&:hover{
-	  background-color: #00f2ff;
-    color: blueviolet
-  }
+
+
 `;
 
 export const InputTxt = styled.input`

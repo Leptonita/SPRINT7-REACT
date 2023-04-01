@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Btn, InputTxt, BtnInfo } from './Panel-styled';
+import { BtnWebNum, InputTxt, BtnInfo } from './Panel-styled';
 import WebInfo from './WebInfo';
 
 const WebInputBtn = ({ id, name, placeholder, value, handleChange }) => {
@@ -35,10 +35,10 @@ const WebInputBtn = ({ id, name, placeholder, value, handleChange }) => {
 
     return (
         <>
-            <Btn onClick={increaseNum}>+</Btn>
+            <BtnWebNum onClick={increaseNum}>+</BtnWebNum>
             <InputTxt id={id} type="text" name={name} placeholder={placeholder} value={valueNum}
                 onChange={handleInputNumChange} />
-            <Btn onClick={decreaseNum}>-</Btn>
+            <BtnWebNum onClick={decreaseNum}>-</BtnWebNum>
             <BtnInfo onClick={showInfoweb}> i </BtnInfo>
 
             <div>
