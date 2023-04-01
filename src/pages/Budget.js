@@ -65,9 +65,9 @@ function Budget() {
     const printArray = (arr) => {
         return arr.map((item, index) => {
             return (
-                <tr key={item.budgetName}>
-                    <td> {index} </td>
-                    <td> {item.dateBudget} </td>
+                <tr key={item.id}>
+                    <td> {item.id} </td>
+                    <td> {item.dateBudget.slice(0, 10)} </td>
                     <td> {item.customer} </td>
                     <td> {item.budgetName}</td>
                     <td> {item.totalBudget}€</td>
@@ -83,6 +83,7 @@ function Budget() {
     function addBudgetObject() {
         let currentBudgetListArr = [];
         const budgetObj = {
+            'id': budgetsListArr.length,
             'customer': customer,
             'budgetName': budgetName,
             'totalBudget': totalBudget,
@@ -95,7 +96,7 @@ function Budget() {
         }
         console.log("budgetObj-add", budgetObj);
 
-        if (budgetsListArr.length !== 0 && budgetsListArr.some(item => (item.budgetName === budgetObj.budgetName))) {
+        if (budgetsListArr.length !== 0 && budgetsListArr.some(item => (item.budgetName.toLowerCase() === budgetObj.budgetName.toLowerCase()))) {
             currentBudgetListArr = [...budgetsListArr];
             alert("ya existe un presupuesto con este nombre");
         } else {
@@ -118,9 +119,9 @@ function Budget() {
         const arrCopy = JSON.parse(JSON.stringify(arr));
 
         const arrCopySorted = arrCopy.sort((a, b) => {
-            if (a[propertyName] < b[propertyName]) {
+            if (a[propertyName].toLowerCase() < b[propertyName].toLowerCase()) {
                 return -1;
-            } else if (a[propertyName] > b[propertyName]) {
+            } else if (a[propertyName].toLowerCase() > b[propertyName].toLowerCase()) {
                 return 1;
             }
             return 0;
@@ -210,7 +211,7 @@ function Budget() {
                     <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'budgetName')}>alfabético nombre presupuesto</ButtonBudgetList>
                     {/*  <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'totalBudget')}>precio</ButtonBudgetList>
  */}
-                    <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'dateBudget')}>reiniciar orden</ButtonBudgetList>
+                    <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'id')}>reiniciar orden</ButtonBudgetList>
 
                     <table><thead>
                         <tr>
