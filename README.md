@@ -14,6 +14,16 @@ EX6 - info popup at web page budget section
 
 EX7 - budget identification, customer, date and printing the list of budgets if any budget exists
 
+EX8 - sort budgets by their names or the date they were created, and a reset button.
+
+EX9 - search of budgets by their names
+      I add a search button to aloud looking for characters included in the budget names.
+
+/// NOTE ::: between ex7 to ex9 :::
+      In terms of validating the form to print the list, initially I was not limiting repetitions, then I limited the availability of repeating budgets names (and was using budget names as key), later on I removed that option, and included an id for each budget object (and used it as key).
+      
+      Finally I switched the 'strategy' for a validation of customer and budget name inputs to avoid empty inputs; and a specific customer could not have budgets with repeated names.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

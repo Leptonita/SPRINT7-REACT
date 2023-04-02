@@ -105,8 +105,24 @@ function Budget() {
             currentBudgetListArr = [...budgetsListArr, budgetObj];
         }
 */
-        // prespuestos con nombres que se pueden repetir
-        currentBudgetListArr = [...budgetsListArr, budgetObj];
+
+        if (budgetObj.customer.length === 0) {
+            alert("indica el nombre del cliente");
+            currentBudgetListArr = [...budgetsListArr];
+        } else if (budgetObj.budgetName.length === 0 || budgetObj.customer.length === 0) {
+            alert("indica el nombre del presupuesto");
+            currentBudgetListArr = [...budgetsListArr];
+        } else if (budgetsListArr.some(item => (item.budgetName.toLowerCase() === budgetObj.budgetName.toLowerCase())) && budgetsListArr.some(item => (item.customer.toLowerCase() === budgetObj.customer.toLowerCase()))) {
+            alert("este cliente ya tiene un presupuesto con este nombre");
+            currentBudgetListArr = [...budgetsListArr];
+        }
+
+        else {
+            // prespuestos con nombres que se pueden repetir
+            currentBudgetListArr = [...budgetsListArr, budgetObj];
+        }
+
+
         //console.log("currentBudgetListArr", currentBudgetListArr);
 
         setBudgetsListArr(currentBudgetListArr);
@@ -146,16 +162,16 @@ function Budget() {
         setPrintedBudgetsList(printingDataSorted);
     }
 
-    const handleInputBudgetList = (e) => {
+    const handleInputBudgetListSearch = (e) => {
         setSearch(e.target.value);
         const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName === e.target.value);
         const printingDataFiltered = printArray(filteredBudgetListArr);
         setPrintedBudgetsList(printingDataFiltered);
     }
 
-    const handleSearch = (presu) => {
+    const handleSearchSimilars = (presu) => {
 
-        const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName === presu);
+        const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName.includes(presu));
         const printingDataFiltered = printArray(filteredBudgetListArr);
         setPrintedBudgetsList(printingDataFiltered);
     }
@@ -227,15 +243,15 @@ function Budget() {
                     <div>
                         ordenados por:
                         <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'dateBudget')}>fecha</ButtonBudgetList>
-                        {/* <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'customer')}>cliente</ButtonBudgetList> */}
+                        {/**/} <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'customer')}>cliente</ButtonBudgetList>
                         <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'budgetName')}>alfabético nombre presupuesto</ButtonBudgetList>
                         {/*  <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'totalBudget')}>precio</ButtonBudgetList>
  */}
-                        <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'id')}>reiniciar orden</ButtonBudgetList>
+                        <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'id')}>reiniciar</ButtonBudgetList>
                     </div>
                     <div><label htmlFor="searcher">Buscar presupuestos: </label>
-                        <input type="search" id="searcher" name="search" placeholder="nombre presupuesto" onChange={handleInputBudgetList} value={search} />
-                        <button onClick={() => handleSearch(search)}>search</button>
+                        <input type="search" id="searcher" name="search" placeholder="nombre presupuesto ..." onChange={handleInputBudgetListSearch} value={search} />
+                        <button onClick={() => handleSearchSimilars(search)}> &nbsp; buscar similares &nbsp;</button>
                     </div>
                     <br />
                     <table><thead>
