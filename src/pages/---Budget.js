@@ -16,13 +16,16 @@ function Budget() {
     const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1);
     const [customer, setCustomer] = useLocalStorage('customerName', '');
     const [budgetName, setBudgetName] = useLocalStorage('budgetName', '');
+
     const [printedBudgetsList, setPrintedBudgetsList] = useState([]);
+
     const [search, setSearch] = useState('');
     const d = new Date();
 
-    //const [budgetsListArr, setBudgetsListArr] = useState([]);
-    const [budgetsListArr, setBudgetsListArr] = useLocalStorage('budgetsListArr', []);
-    const [orderLayout, setOrderLayout] = useLocalStorage('orderLayout', 'id');
+    const [budgetsListArr, setBudgetsListArr] = useState(() => {
+        const storedBLA = localStorage.getItem('budgetsListArr');
+        return storedBLA !== null ? JSON.parse(storedBLA) : [];
+    });
 
     const basicWebBudget = 500;
     //let printedBudgetsList = [];
@@ -36,10 +39,9 @@ function Budget() {
 
     useEffect(() => {
         localStorage.setItem('budgetsListArr', JSON.stringify(budgetsListArr));
-        localStorage.setItem('orderLayout', JSON.stringify(orderLayout));
+        // localStorage.setItem('printedBudgetsList', JSON.stringify(printedBudgetsList));
+    }, [budgetsListArr])
 
-        sortArray(budgetsListArr, orderLayout);
-    }, [budgetsListArr, orderLayout])
 
 
     const calculateTotalBudget = () => {
@@ -75,17 +77,19 @@ function Budget() {
     const printArray = (arr) => {
         return arr.map((item, index) => {
             return (
-                <tr key={item.id}>
-                    <td> {item.id} </td>
-                    <td> {item.dateBudget.slice(0, 10)} </td>
-                    <td> {item.customer} </td>
-                    <td> {item.budgetName}</td>
-                    <td> {item.totalBudget}€</td>
-                    <td> {item.web ? `Web con ${item.pages} pág. y ${item.languages} ${item.languages < 2 ? 'idioma' : 'idiomas'}` : "no-web"} </td>
+                <>
+                    <tr key={item.id}>
+                        <td> {item.id} </td>
+                        <td> {item.dateBudget.slice(0, 10)} </td>
+                        <td> {item.customer} </td>
+                        <td> {item.budgetName}</td>
+                        <td> {item.totalBudget}€</td>
+                        <td> {item.web ? `Web con ${item.pages} pág. y ${item.languages} ${item.languages < 2 ? 'idioma' : 'idiomas'}` : "no-web"} </td>
 
-                    <td> {item.seo ? "SEO" : "no-seo"} </td>
-                    <td> {item.ads ? "Google Ads" : "no-publi"} </td>
-                </tr>
+                        <td> {item.seo ? "SEO" : "no-seo"} </td>
+                        <td> {item.ads ? "Google Ads" : "no-publi"} </td>
+                    </tr>
+                </>
             )
         });
     }
@@ -93,6 +97,7 @@ function Budget() {
     function addBudgetObject() {
         let currentBudgetListArr = [];
         const budgetObj = {
+            'key': budgetsListArr.length,
             'id': budgetsListArr.length,
             'customer': customer,
             'budgetName': budgetName,
@@ -113,7 +118,7 @@ function Budget() {
         } else {
             currentBudgetListArr = [...budgetsListArr, budgetObj];
         }
-*/
+    */
 
         if (budgetObj.customer.length === 0) {
             alert("indica el nombre del cliente");
@@ -136,7 +141,7 @@ function Budget() {
 
         setBudgetsListArr(currentBudgetListArr);
         //console.log('budgetsListArr-add', budgetsListArr);
-        localStorage.setItem('budgetsListArr', JSON.stringify(budgetsListArr));
+
 
         const printingB = printArray(currentBudgetListArr);
         //console.log('printingB', printingB);
@@ -149,9 +154,6 @@ function Budget() {
     const sortStringArray = (arr, attrib) => {
         const propertyName = attrib;
         const arrCopy = JSON.parse(JSON.stringify(arr));
-
-        localStorage.setItem('orderLayout', JSON.stringify(attrib));
-        setOrderLayout(attrib);
 
         const arrCopySorted = arrCopy.sort((a, b) => {
             if (a[propertyName].toLowerCase() < b[propertyName].toLowerCase()) {
@@ -170,20 +172,10 @@ function Budget() {
         const propertyName = attrib;
         const arrCopy = JSON.parse(JSON.stringify(arr));
 
-        localStorage.setItem('orderLayout', JSON.stringify(attrib));
-        setOrderLayout(attrib);
         const arrCopySorted = arrCopy.sort((a, b) => Number(a[propertyName]) - Number(b[propertyName]));
         console.log("arr", arr);
         const printingDataSorted = printArray(arrCopySorted);
         setPrintedBudgetsList(printingDataSorted);
-    }
-
-    const sortArray = (arr, order) => {
-        if (order === 'dateBudget' || order === 'id' || order === 'totalBudget') {
-            return sortObjNumArray(arr, order);
-        } else {
-            return sortStringArray(arr, order);
-        }
     }
 
     const handleInputBudgetListSearch = (e) => {
@@ -266,12 +258,12 @@ function Budget() {
                     <h1>Listado de presupuestos</h1>
                     <div>
                         ordenados por:
-                        <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'dateBudget')}>fecha</ButtonBudgetList>
-                        {/**/} <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'customer')}>cliente</ButtonBudgetList>
-                        <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'budgetName')}>alfabético nombre presupuesto</ButtonBudgetList>
-                        {/* */} <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'totalBudget')}>precio</ButtonBudgetList>
-
-                        <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'id')}>reiniciar</ButtonBudgetList>
+                        <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'dateBudget')}>fecha</ButtonBudgetList>
+                        {/**/} <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'customer')}>cliente</ButtonBudgetList>
+                        <ButtonBudgetList onClick={() => sortStringArray(budgetsListArr, 'budgetName')}>alfabético nombre presupuesto</ButtonBudgetList>
+                        {/*  <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'totalBudget')}>precio</ButtonBudgetList>
+ */}
+                        <ButtonBudgetList onClick={() => sortObjNumArray(budgetsListArr, 'id')}>reiniciar</ButtonBudgetList>
                     </div>
                     <div><label htmlFor="searcher">Buscar presupuestos: </label>
                         <input type="search" id="searcher" name="search" placeholder="nombre presupuesto ..." onChange={handleInputBudgetListSearch} value={search} />
