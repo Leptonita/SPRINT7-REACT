@@ -19,6 +19,8 @@ EX8 - sort budgets by their names or the date they were created, and a reset but
 EX9 - search of budgets by their names
       I add a search button to aloud looking for characters included in the budget names.
 
+EX10 - persistence of budgets list print based on selected order - with localStorage
+
 /// NOTE ::: between ex7 to ex9 :::
       In terms of validating the form to print the list, initially I was not limiting repetitions, then I limited the availability of repeating budgets names (and was using budget names as key), later on I removed that option, and included an id for each budget object (and used it as key).
       
