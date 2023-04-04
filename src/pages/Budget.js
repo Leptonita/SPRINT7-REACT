@@ -8,29 +8,16 @@ import { useSearchParams, useLocation } from 'react-router-dom';
 function Budget() {
 
     const [params, setParams] = useSearchParams();
-    const location = useLocation();
-    console.log('location', location);
     const query = new URLSearchParams(useLocation().search);
-    /*
-    setBudget(query.get('budget'));
-    setTotalBudget(query.get('totalBudget'));
-    setWebIsChecked(query.get('webIsChecked'));
-    setSeoIsChecked(query.get('seoIsChecked'));
-    setAdsIsChecked(query.get('adsIsChecked'));
-    setNumPages(query.get('numPages'));
-    setNumLanguages(query.get('numLanguages'));
-    setCustomer(query.get('customerName'));
-    setBudgetName(query.get('budgetName'));
-    setBudgetsListArr(query.get('budgetsListArr'));*/
 
     //order of the values on the budget's array is [web,seo,googleAds]
-    const [budget, setBudget] = useLocalStorage('budgetArr', [0, 0, 0], [query.get('budget0'), query.get('budget1'), query.get('budget2')]);
-    const [totalBudget, setTotalBudget] = useLocalStorage('totalBudget', 0, query.get('totalBudget'));
+    const [budget, setBudget] = useLocalStorage('budgetArr', [0, 0, 0], [Number(query.get('budget0')), Number(query.get('budget1')), Number(query.get('budget2'))]);
+    const [totalBudget, setTotalBudget] = useLocalStorage('totalBudget', 0, Number(query.get('totalBudget')));
     const [webIsChecked, setWebIsChecked] = useLocalStorage('webIsChecked', false, JSON.parse(query.get('web')));
     const [seoIsChecked, setSeoIsChecked] = useLocalStorage('seoIsChecked', false, JSON.parse(query.get('seo')));
     const [adsIsChecked, setAdsIsChecked] = useLocalStorage('adsIsChecked', false, JSON.parse(query.get('ads')));
-    const [numPages, setNumPages] = useLocalStorage('numPages', 0, query.get('pages'));
-    const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1, query.get('languages'));
+    const [numPages, setNumPages] = useLocalStorage('numPages', 0, Number(query.get('pages')));
+    const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1, Number(query.get('languages')));
     const [customer, setCustomer] = useLocalStorage('customerName', '', query.get('customer'));
     const [budgetName, setBudgetName] = useLocalStorage('budgetName', '', query.get('budgetName'));
     const [printedBudgetsList, setPrintedBudgetsList] = useState([]);
@@ -42,12 +29,6 @@ function Budget() {
     const [orderLayout, setOrderLayout] = useLocalStorage('orderLayout', 'id',);
 
     const basicWebBudget = 500;
-    //let printedBudgetsList = [];
-
-    /* useEffect(() => {
-        
-    }, []) */
-
 
     useEffect(() => {
         localStorage.setItem("webIsChecked", JSON.stringify(webIsChecked));
@@ -141,17 +122,18 @@ function Budget() {
             'languages': numLanguages,
             'dateBudget': d.toLocaleString('en-GB')
         }
-        console.log("budgetObj-add", budgetObj);
+        //console.log("budgetObj-add", budgetObj);
 
         //presupuestos con nombres 'únicos'
-        /*  if (budgetsListArr.length !== 0 && budgetsListArr.some(item => (item.budgetName.toLowerCase() === budgetObj.budgetName.toLowerCase()))) {
-            currentBudgetListArr = [...budgetsListArr];
-            alert("ya existe un presupuesto con este nombre");
-        } else {
-            currentBudgetListArr = [...budgetsListArr, budgetObj];
-        }
-*/
-
+        /*      if (budgetsListArr.length !== 0 
+                && budgetsListArr.some(item => (item.budgetName.toLowerCase() === budgetObj.budgetName.toLowerCase()))) {
+                    currentBudgetListArr = [...budgetsListArr];
+                    alert("ya existe un presupuesto con este nombre");
+                } else {
+                    currentBudgetListArr = [...budgetsListArr, budgetObj];
+                }
+        */
+        //validacion para evitar nombres vacíoy y coincidencias
         if (budgetObj.customer.length === 0) {
             alert("indica el nombre del cliente");
             currentBudgetListArr = [...budgetsListArr];
@@ -168,17 +150,13 @@ function Budget() {
             currentBudgetListArr = [...budgetsListArr, budgetObj];
         }
         //console.log("currentBudgetListArr", currentBudgetListArr);
-
         setBudgetsListArr(currentBudgetListArr);
         //console.log('budgetsListArr-add', budgetsListArr);
         localStorage.setItem('budgetsListArr', JSON.stringify(budgetsListArr));
-
         const printingB = printArray(currentBudgetListArr);
         //console.log('printingB', printingB);
-
         setPrintedBudgetsList(printingB);
         //console.log('printedBudgetsList', printedBudgetsList);
-
     }
 
     const sortStringArray = (arr, attrib) => {
@@ -196,7 +174,7 @@ function Budget() {
             }
             return 0;
         })
-        console.log("arr", arr);
+        //console.log("arr", arr);
         const printingDataSorted = printArray(arrCopySorted);
         setPrintedBudgetsList(printingDataSorted);
     }
@@ -204,11 +182,9 @@ function Budget() {
     const sortObjNumArray = (arr, attrib) => {
         const propertyName = attrib;
         const arrCopy = JSON.parse(JSON.stringify(arr));
-
         localStorage.setItem('orderLayout', JSON.stringify(attrib));
         setOrderLayout(attrib);
         const arrCopySorted = arrCopy.sort((a, b) => Number(a[propertyName]) - Number(b[propertyName]));
-        console.log("arr", arr);
         const printingDataSorted = printArray(arrCopySorted);
         setPrintedBudgetsList(printingDataSorted);
     }
@@ -229,7 +205,6 @@ function Budget() {
     }
 
     const handleSearchSimilars = (presu) => {
-
         const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName.includes(presu));
         const printingDataFiltered = printArray(filteredBudgetListArr);
         setPrintedBudgetsList(printingDataFiltered);
@@ -324,7 +299,6 @@ function Budget() {
                             <td> nombre presu.</td>
                             <td> precio</td>
                             <td> opción web</td>
-
                             <td> opción SEO</td>
                             <td> opción publicidad</td>
                         </tr>
