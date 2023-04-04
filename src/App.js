@@ -1,14 +1,11 @@
-import { useState } from "react";
-
-
+import Routes from './application/Router'
 function App() {
 
 
 
   return (
     <div>
-
-
+      <Routes />
     </div>
   );
 }
