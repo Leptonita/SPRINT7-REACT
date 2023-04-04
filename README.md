@@ -21,6 +21,9 @@ EX9 - search of budgets by their names
 
 EX10 - persistence of budgets list print based on selected order - with localStorage
 
+EX11 - use of url params to share a specific budget data.
+      ::: I converted any data that is not a string, such as numbers and booleans. And I had to separate the different elements of an array and reconstruct the array.
+
 /// NOTE ::: between ex7 to ex9 :::
       In terms of validating the form to print the list, initially I was not limiting repetitions, then I limited the availability of repeating budgets names (and was using budget names as key), later on I removed that option, and included an id for each budget object (and used it as key).
       
