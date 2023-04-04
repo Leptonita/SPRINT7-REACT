@@ -1,9 +1,10 @@
 import { useState } from "react";
 
-const useLocalStorage = (key, initialValue) => {
+const useLocalStorage = (key, initialValue, queryValue) => {
 
     const [storedValue, setStoredValue] = useState(() => {
         try {
+            if (queryValue) { return queryValue };
             const itemStored = localStorage.getItem(key);
             return itemStored ? JSON.parse(itemStored) : initialValue;
         } catch (error) {

@@ -2,30 +2,51 @@ import WebPages from "../components/WebPages";
 import { useEffect, useState } from "react";
 import useLocalStorage from "../utils/useLocalStorage";
 import NavBar from "../components/NavBar";
-import { DivBudgetContainer, DivIndentify, DivForm, TitleB, SpanPrecio, ButtonBudgetList, BudgetsList } from '../components/Panel-styled';
+import { DivBudgetContainer, DivIndentify, DivForm, TitleB, SpanPrecio, ButtonBudgetList, StyledLink, BudgetsList } from '../components/Panel-styled';
+import { useSearchParams, useLocation } from 'react-router-dom';
 
 function Budget() {
 
+    const [params, setParams] = useSearchParams();
+    const location = useLocation();
+    console.log('location', location);
+    const query = new URLSearchParams(useLocation().search);
+    /*
+    setBudget(query.get('budget'));
+    setTotalBudget(query.get('totalBudget'));
+    setWebIsChecked(query.get('webIsChecked'));
+    setSeoIsChecked(query.get('seoIsChecked'));
+    setAdsIsChecked(query.get('adsIsChecked'));
+    setNumPages(query.get('numPages'));
+    setNumLanguages(query.get('numLanguages'));
+    setCustomer(query.get('customerName'));
+    setBudgetName(query.get('budgetName'));
+    setBudgetsListArr(query.get('budgetsListArr'));*/
+
     //order of the values on the budget's array is [web,seo,googleAds]
-    const [budget, setBudget] = useLocalStorage('budgetArr', [0, 0, 0]);
-    const [totalBudget, setTotalBudget] = useLocalStorage('totalBudget', 0)
-    const [webIsChecked, setWebIsChecked] = useLocalStorage('webIsChecked', false);
-    const [seoIsChecked, setSeoIsChecked] = useLocalStorage('seoIsChecked', false);
-    const [adsIsChecked, setAdsIsChecked] = useLocalStorage('adsIsChecked', false);
-    const [numPages, setNumPages] = useLocalStorage('numPages', 0);
-    const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1);
-    const [customer, setCustomer] = useLocalStorage('customerName', '');
-    const [budgetName, setBudgetName] = useLocalStorage('budgetName', '');
+    const [budget, setBudget] = useLocalStorage('budgetArr', [0, 0, 0], [query.get('budget0'), query.get('budget1'), query.get('budget2')]);
+    const [totalBudget, setTotalBudget] = useLocalStorage('totalBudget', 0, query.get('totalBudget'));
+    const [webIsChecked, setWebIsChecked] = useLocalStorage('webIsChecked', false, JSON.parse(query.get('web')));
+    const [seoIsChecked, setSeoIsChecked] = useLocalStorage('seoIsChecked', false, JSON.parse(query.get('seo')));
+    const [adsIsChecked, setAdsIsChecked] = useLocalStorage('adsIsChecked', false, JSON.parse(query.get('ads')));
+    const [numPages, setNumPages] = useLocalStorage('numPages', 0, query.get('pages'));
+    const [numLanguages, setNumLanguages] = useLocalStorage('numLanguages', 1, query.get('languages'));
+    const [customer, setCustomer] = useLocalStorage('customerName', '', query.get('customer'));
+    const [budgetName, setBudgetName] = useLocalStorage('budgetName', '', query.get('budgetName'));
     const [printedBudgetsList, setPrintedBudgetsList] = useState([]);
     const [search, setSearch] = useState('');
     const d = new Date();
 
     //const [budgetsListArr, setBudgetsListArr] = useState([]);
-    const [budgetsListArr, setBudgetsListArr] = useLocalStorage('budgetsListArr', []);
-    const [orderLayout, setOrderLayout] = useLocalStorage('orderLayout', 'id');
+    const [budgetsListArr, setBudgetsListArr] = useLocalStorage('budgetsListArr', [], query.get('budgetsListArr'));
+    const [orderLayout, setOrderLayout] = useLocalStorage('orderLayout', 'id',);
 
     const basicWebBudget = 500;
     //let printedBudgetsList = [];
+
+    /* useEffect(() => {
+        
+    }, []) */
 
 
     useEffect(() => {
@@ -40,6 +61,22 @@ function Budget() {
 
         sortArray(budgetsListArr, orderLayout);
     }, [budgetsListArr, orderLayout])
+
+    useEffect(() => {
+        setParams({
+            'customer': customer,
+            'budgetName': budgetName,
+            'totalBudget': totalBudget,
+            'web': webIsChecked,
+            'seo': seoIsChecked,
+            'ads': adsIsChecked,
+            'pages': numPages,
+            'languages': numLanguages,
+            'budget0': budget[0],
+            'budget1': budget[1],
+            'budget2': budget[2]
+        })
+    }, [customer, budgetName, totalBudget, webIsChecked, seoIsChecked, adsIsChecked, numPages, numLanguages])
 
 
     const calculateTotalBudget = () => {
@@ -130,8 +167,6 @@ function Budget() {
             // prespuestos con nombres que se pueden repetir
             currentBudgetListArr = [...budgetsListArr, budgetObj];
         }
-
-
         //console.log("currentBudgetListArr", currentBudgetListArr);
 
         setBudgetsListArr(currentBudgetListArr);
@@ -259,7 +294,10 @@ function Budget() {
                         Precio: <SpanPrecio>{totalBudget}€</SpanPrecio>
                     </div>
 
-                    <ButtonBudgetList onClick={() => addBudgetObject()}>Añadir presupuesto al listado</ButtonBudgetList>
+                    <ButtonBudgetList onClick={() => addBudgetObject()}>
+                        Añadir presupuesto al listado
+                    </ButtonBudgetList>
+
                 </DivForm>
 
                 <BudgetsList>

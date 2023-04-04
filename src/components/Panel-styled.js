@@ -43,6 +43,10 @@ ${ButtonColorCSS};
 margin: 10px 3px;
 padding: 5px 11px;
 `;
+export const StyledLink = styled(Link)`
+ ${ButtonColorCSS};
+text-decoration: none;
+`;
 
 export const BudgetsList = styled.div`
 min-width: 570px;

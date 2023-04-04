@@ -1,4 +1,4 @@
-//import { Link } from 'react-router-dom';
+
 import { UlMenu, LiLogo, LiLink } from './Panel-styled';
 
 const NavBar = () => {
