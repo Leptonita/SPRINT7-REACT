@@ -11,14 +11,14 @@ const Welcome = () => {
 
             <DivWelcome>
                 <div>
-                    Para ofrecerte una valoración según los servicios que necesites en tu página web,
-                    hemos preparado esta aplicación.
+                    Bienvenid@s a Webs+Go.
+                    Hemos preparado esta aplicación, para ofrecerte una rápida valoración económica de nuestros servicios web.
                 </div>
                 <br />
                 <div>
 
-                    Los servicios que puedes valorar son los necesarios para crear la página web, teniendo en cuenta cuantas páginas e idiomas desees.
-                    Adicionalmente puedes incluir al presupuesto servicios de posicionamiento en buscadores (SEO) y publicidad en Google Ads para completar la plena funcionalidad de la web.
+                    Para crear la página web, podrás elegir cuantas páginas e idiomas desees.
+                    Adicionalmente puedes incluir en el presupuesto servicios de posicionamiento en buscadores (SEO) y publicidad en Google Ads para completar la plena funcionalidad de la web.
                 </div>
                 <div>
                     <Link to="/budget"><BtnW>Calcular Presupuesto</BtnW></Link>

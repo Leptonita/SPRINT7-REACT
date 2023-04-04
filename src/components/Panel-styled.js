@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { keyframes } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 //button colors
 const ButtonColorCSS = css`
@@ -164,12 +165,14 @@ color: #ff0073;
 text-shadow: 1px -1px 2px #00e2fb;
 `;
 
-export const LiLink = styled.li`
+export const LiLink = styled(Link)`
 font-weight: bolder;
-color: blueviolet;
+color: #ff0073;
+text-decoration: none;
+}
 text-shadow: 1px -1px 2px #00e2fb;
 &:hover {
-  color: pink;
+  color: #e5029d;
 }
 `;
 
