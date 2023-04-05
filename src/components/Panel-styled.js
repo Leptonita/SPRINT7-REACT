@@ -42,6 +42,7 @@ export const ButtonBudgetList = styled.button`
 ${ButtonColorCSS};
 margin: 10px 3px;
 padding: 5px 11px;
+border-radius: 7px;
 `;
 export const StyledLink = styled(Link)`
  ${ButtonColorCSS};
