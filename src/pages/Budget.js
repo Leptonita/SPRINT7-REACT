@@ -210,7 +210,8 @@ function Budget() {
 
     const handleInputBudgetListSearch = (e) => {
         setSearch(e.target.value);
-        const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName === e.target.value);
+        //const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName === e.target.value);
+        const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName.includes(e.target.value));
         const printingDataFiltered = printArray(filteredBudgetListArr);
         setPrintedBudgetsList(printingDataFiltered);
     }
