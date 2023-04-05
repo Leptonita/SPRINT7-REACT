@@ -1,5 +1,7 @@
 SPRINT 7 REACT - BUDGET
 
+project available at https://precious-madeleine-3b7c34.netlify.app/
+
 EX1 - array for the state of 3 checkboxes and a state for the total budget 
  
 EX2 - budget incluiding a panel for web to estimate extra pages and languages
