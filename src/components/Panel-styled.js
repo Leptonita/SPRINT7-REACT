@@ -42,6 +42,7 @@ export const ButtonBudgetList = styled.button`
 ${ButtonColorCSS};
 margin: 10px 3px;
 padding: 5px 11px;
+border-radius: 7px;
 `;
 export const StyledLink = styled(Link)`
  ${ButtonColorCSS};
@@ -139,6 +140,7 @@ height: 100%;
 background: rgba(114, 114, 114, 0.7);
 display: ${(props) => props.isVisible ? 'flex' : 'none'};
 align-items: center;
+justify-content:  center;
 `;
 
 export const DivInfoTxt = styled.div`

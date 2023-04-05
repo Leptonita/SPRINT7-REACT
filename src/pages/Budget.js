@@ -24,6 +24,7 @@ function Budget() {
     const [budgetName, setBudgetName] = useLocalStorage('budgetName', '', query.get('budgetName'));
     const [printedBudgetsList, setPrintedBudgetsList] = useState([]);
     const [search, setSearch] = useState('');
+
     const d = new Date();
 
     //const [budgetsListArr, setBudgetsListArr] = useState([]);
@@ -103,13 +104,16 @@ function Budget() {
                     <td> {item.totalBudget}€</td>
                     {/* <td> {item.web ? `Web con ${item.pages} pág. y ${item.languages} ${item.languages < 2 ? 'idioma' : 'idiomas'}` : "no-web"} </td> */}
 
-                    <td>{item.web ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faXmark} />}</td>
-                    <td>{item.web ? `${item.pages}` : <FontAwesomeIcon icon={faXmark} />}</td>
-                    <td>{item.web ? `${item.languages}` : <FontAwesomeIcon icon={faXmark} />}</td>
+                    <td>{item.web ? <FontAwesomeIcon icon={faCheck} style={{ color: "#17a642", }} />
+                        : <FontAwesomeIcon icon={faXmark} style={{ color: "#ff0000", }} />}</td>
+                    <td>{item.web ? `${item.pages}` : <FontAwesomeIcon icon={faXmark} style={{ color: "#ff0000", }} />}</td>
+                    <td>{item.web ? `${item.languages}` : <FontAwesomeIcon icon={faXmark} style={{ color: "#ff0000", }} />}</td>
 
-                    <td> {item.seo ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faXmark} />}
-                    </td>
-                    <td> {item.ads ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faXmark} />} </td>
+                    <td> {item.seo ? <FontAwesomeIcon icon={faCheck} style={{ color: "#17a642", }} />
+                        : <FontAwesomeIcon icon={faXmark} style={{ color: "#ff0000", }} />}</td>
+
+                    <td> {item.ads ? <FontAwesomeIcon icon={faCheck} style={{ color: "#17a642", }} />
+                        : <FontAwesomeIcon icon={faXmark} style={{ color: "#ff0000", }} />} </td>
                 </tr>
             )
         });
@@ -206,7 +210,8 @@ function Budget() {
 
     const handleInputBudgetListSearch = (e) => {
         setSearch(e.target.value);
-        const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName === e.target.value);
+        //const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName === e.target.value);
+        const filteredBudgetListArr = budgetsListArr.filter(item => item.budgetName.includes(e.target.value));
         const printingDataFiltered = printArray(filteredBudgetListArr);
         setPrintedBudgetsList(printingDataFiltered);
     }
