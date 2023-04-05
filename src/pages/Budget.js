@@ -4,7 +4,9 @@ import useLocalStorage from "../utils/useLocalStorage";
 import NavBar from "../components/NavBar";
 import { DivBudgetContainer, DivIndentify, DivForm, TitleB, SpanPrecio, ButtonBudgetList, StyledLink, BudgetsList } from '../components/Panel-styled';
 import { useSearchParams, useLocation } from 'react-router-dom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 function Budget() {
 
     const [params, setParams] = useSearchParams();
@@ -99,10 +101,15 @@ function Budget() {
                     <td> {item.customer} </td>
                     <td> {item.budgetName}</td>
                     <td> {item.totalBudget}€</td>
-                    <td> {item.web ? `Web con ${item.pages} pág. y ${item.languages} ${item.languages < 2 ? 'idioma' : 'idiomas'}` : "no-web"} </td>
+                    {/* <td> {item.web ? `Web con ${item.pages} pág. y ${item.languages} ${item.languages < 2 ? 'idioma' : 'idiomas'}` : "no-web"} </td> */}
 
-                    <td> {item.seo ? "SEO" : "no-seo"} </td>
-                    <td> {item.ads ? "Google Ads" : "no-publi"} </td>
+                    <td>{item.web ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faXmark} />}</td>
+                    <td>{item.web ? `${item.pages}` : <FontAwesomeIcon icon={faXmark} />}</td>
+                    <td>{item.web ? `${item.languages}` : <FontAwesomeIcon icon={faXmark} />}</td>
+
+                    <td> {item.seo ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faXmark} />}
+                    </td>
+                    <td> {item.ads ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faXmark} />} </td>
                 </tr>
             )
         });
@@ -281,7 +288,7 @@ function Budget() {
                         ordenados por:
                         <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'dateBudget')}>fecha</ButtonBudgetList>
                         {/**/} <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'customer')}>cliente</ButtonBudgetList>
-                        <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'budgetName')}>alfabético nombre presupuesto</ButtonBudgetList>
+                        <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'budgetName')}>presupuesto</ButtonBudgetList>
                         {/* */} <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'totalBudget')}>precio</ButtonBudgetList>
 
                         <ButtonBudgetList onClick={() => sortArray(budgetsListArr, 'id')}>reiniciar</ButtonBudgetList>
@@ -296,11 +303,13 @@ function Budget() {
                             <td> id </td>
                             <td> fecha </td>
                             <td> cliente</td>
-                            <td> nombre presu.</td>
+                            <td> presupuesto</td>
                             <td> precio</td>
-                            <td> opción web</td>
-                            <td> opción SEO</td>
-                            <td> opción publicidad</td>
+                            <td> web</td>
+                            <td> páginas</td>
+                            <td> idiomas</td>
+                            <td> SEO</td>
+                            <td> publicidad</td>
                         </tr>
                     </thead>
                         <tbody>
