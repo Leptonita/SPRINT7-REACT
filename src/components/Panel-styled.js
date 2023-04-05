@@ -140,6 +140,7 @@ height: 100%;
 background: rgba(114, 114, 114, 0.7);
 display: ${(props) => props.isVisible ? 'flex' : 'none'};
 align-items: center;
+justify-content:  center;
 `;
 
 export const DivInfoTxt = styled.div`
